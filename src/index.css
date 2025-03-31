@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+@layer base {
+  body {
+    @apply bg-light text-dark;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium;
+  }
+}
+
+/* Custom components */
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium transition-colors;
+  }
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary/90;
+  }
+  .btn-secondary {
+    @apply bg-secondary text-white hover:bg-secondary/90;
+  }
+  .input {
+    @apply p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary;
+  }
+  .card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden transition-all hover:shadow-lg;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Custom utilities */
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .animate-slideDown {
+    animation: slideDown 0.3s ease-in-out;
+  }
+  
+  .animate-slideUp {
+    animation: slideUp 0.3s ease-in-out;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 2s infinite;
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  .transition-smooth {
+    transition: all 0.3s ease-in-out;
+  }
+}
