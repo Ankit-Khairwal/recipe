@@ -28,11 +28,7 @@ const EditRecipe = () => {
     const fetchRecipeDetails = async () => {
       try {
         setLoading(true);
-        // In a real app, this would be fetching from your backend
-        // const response = await axios.get(`http://localhost:5000/api/recipes/${id}`);
-        // const recipeData = response.data;
-        
-        // For demo purposes, using placeholder data
+       
         const demoRecipes = {
           '1': {
             _id: '1',
