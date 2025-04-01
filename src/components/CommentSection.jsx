@@ -8,12 +8,12 @@ const CommentSection = ({ recipeId }) => {
   const [loading, setLoading] = useState(false);
   const { isAuthenticated, user } = useAuth();
 
-  // In a real app, this would come from your backend
+  
   useEffect(() => {
-    // Simulating loading comments
+    
     setLoading(true);
     
-    // Mock data for demo
+   
     const mockComments = [
       {
         id: '1',
