@@ -12,7 +12,7 @@ const Login = () => {
   const location = useLocation();
   const { login } = useAuth();
   
-  // Get the return URL if provided
+ 
   const from = location.state?.from || '/';
 
   const onSubmit = async (data) => {
@@ -20,17 +20,14 @@ const Login = () => {
       setLoading(true);
       setLoginError(null);
       
-      // In a real app, you would send a request to your backend
-      // const response = await axios.post('http://localhost:5000/api/auth/login', data);
-      
-      // For demo purposes, we'll simulate a successful login
+ 
       console.log('Login data:', data);
       
-      // Use the auth context login function
+ 
       login({ email: data.email, name: data.email.split('@')[0] });
       
       setLoading(false);
-      // Navigate to the page user was trying to access, or home page
+   
       navigate(from);
     } catch (error) {
       console.error('Login error:', error);
