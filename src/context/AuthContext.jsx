@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is already logged in
+    
     const token = localStorage.getItem('authToken');
     const userData = localStorage.getItem('user');
     
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
         setUser(JSON.parse(userData));
         setIsAuthenticated(true);
       } catch (error) {
-        // Handle invalid stored user data
+        
         localStorage.removeItem('authToken');
         localStorage.removeItem('user');
       }
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData) => {
-    localStorage.setItem('authToken', 'demo-token'); // In a real app, this would be a JWT token
+    localStorage.setItem('authToken', 'demo-token'); 
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
     setIsAuthenticated(true);
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = (userData) => {
-    localStorage.setItem('authToken', 'demo-token'); // In a real app, this would be a JWT token
+    localStorage.setItem('authToken', 'demo-token'); 
     localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
     setIsAuthenticated(true);
