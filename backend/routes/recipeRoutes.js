@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Recipe = require('../models/recipeModel');
 
-// GET all recipes
+
 router.get('/', async (req, res) => {
   try {
     const recipes = await Recipe.find().sort({ createdAt: -1 });
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET a single recipe
+
 router.get('/:id', async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
@@ -25,7 +25,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// CREATE a new recipe
+
 router.post('/', async (req, res) => {
   try {
     const newRecipe = new Recipe(req.body);
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// UPDATE a recipe
+
 router.put('/:id', async (req, res) => {
   try {
     const updatedRecipe = await Recipe.findByIdAndUpdate(
@@ -55,7 +55,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE a recipe
+
 router.delete('/:id', async (req, res) => {
   try {
     const deletedRecipe = await Recipe.findByIdAndDelete(req.params.id);
@@ -70,7 +70,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// GET recipes by category
+
 router.get('/category/:category', async (req, res) => {
   try {
     const recipes = await Recipe.find({ category: req.params.category }).sort({ createdAt: -1 });
@@ -80,7 +80,7 @@ router.get('/category/:category', async (req, res) => {
   }
 });
 
-// SEARCH recipes
+
 router.get('/search/:query', async (req, res) => {
   const query = req.params.query;
   try {
