@@ -9,22 +9,22 @@ const CookingMode = ({ recipe }) => {
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
   const [steps, setSteps] = useState([]);
 
-  // Parse instructions into steps when recipe changes
+ 
   useEffect(() => {
     if (recipe && recipe.instructions) {
-      // Split instructions by newlines and numbered steps
+     
       const parsed = recipe.instructions
         .split(/\n+/)
         .filter(step => step.trim().length > 0)
         .map(step => {
-          // Remove numbering if present (e.g., "1. " or "Step 1:")
+          
           return step.replace(/^\d+\.|\bStep\s+\d+:?\s*/i, '').trim();
         });
       setSteps(parsed);
     }
   }, [recipe]);
 
-  // Timer effect
+  
   useEffect(() => {
     let interval;
     
@@ -37,15 +37,15 @@ const CookingMode = ({ recipe }) => {
     return () => clearInterval(interval);
   }, [isTimerRunning]);
 
-  // Speech synthesis for reading steps
+ 
   useEffect(() => {
     if (isOpen && isVoiceEnabled && currentStep < steps.length) {
-      // Cancel any ongoing speech
+      
       window.speechSynthesis.cancel();
       
-      // Read current step
+     
       const utterance = new SpeechSynthesisUtterance(steps[currentStep]);
-      utterance.rate = 0.9; // Slightly slower rate for better comprehension
+      utterance.rate = 0.9; 
       window.speechSynthesis.speak(utterance);
     }
     
@@ -54,28 +54,28 @@ const CookingMode = ({ recipe }) => {
     };
   }, [currentStep, isOpen, isVoiceEnabled, steps]);
 
-  // Format timer as MM:SS
+
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Go to next step
+
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(prevStep => prevStep + 1);
     }
   };
 
-  // Go to previous step
+  
   const prevStep = () => {
     if (currentStep > 0) {
       setCurrentStep(prevStep => prevStep - 1);
     }
   };
 
-  // Toggle voice instructions
+ 
   const toggleVoice = () => {
     if (isVoiceEnabled) {
       window.speechSynthesis.cancel();
@@ -83,34 +83,34 @@ const CookingMode = ({ recipe }) => {
     setIsVoiceEnabled(!isVoiceEnabled);
   };
 
-  // Start cooking mode
+
   const startCookingMode = () => {
     setIsOpen(true);
     setCurrentStep(0);
     setTimer(0);
     setIsTimerRunning(true);
     
-    // Enable fullscreen if supported
+   
     document.documentElement.requestFullscreen?.();
     
-    // Prevent screen from sleeping if supported
+   
     navigator.wakeLock?.request('screen').catch(err => {
       console.log('Wake Lock error:', err);
     });
   };
 
-  // Exit cooking mode
+ 
   const exitCookingMode = () => {
     window.speechSynthesis.cancel();
     setIsOpen(false);
     setIsTimerRunning(false);
     
-    // Exit fullscreen if we're in it
+   
     if (document.fullscreenElement) {
       document.exitFullscreen();
     }
     
-    // Release wake lock if we have it
+  
     navigator.wakeLock?.release?.();
   };
 
@@ -131,7 +131,7 @@ const CookingMode = ({ recipe }) => {
       {isOpen && (
         <div className="fixed inset-0 bg-white z-50">
           <div className="flex flex-col h-full">
-            {/* Header */}
+            
             <div className="bg-primary text-white px-4 py-3 flex justify-between items-center">
               <h2 className="text-xl font-semibold">{recipe.title}</h2>
               <div className="flex items-center gap-4">
@@ -156,7 +156,7 @@ const CookingMode = ({ recipe }) => {
               </div>
             </div>
             
-            {/* Main content */}
+           
             <div className="flex-1 overflow-y-auto p-6 flex flex-col">
               <div className="mb-4 text-center">
                 <span className="inline-block px-3 py-1 bg-secondary/20 text-secondary rounded-full">
@@ -170,7 +170,7 @@ const CookingMode = ({ recipe }) => {
                 </div>
               </div>
               
-              {/* Ingredients reminder */}
+              
               <div className="mt-6 bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2">Ingredients needed:</h3>
                 <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -184,7 +184,7 @@ const CookingMode = ({ recipe }) => {
               </div>
             </div>
             
-            {/* Controls */}
+            
             <div className="bg-gray-100 p-4 flex justify-center items-center gap-4">
               <button
                 onClick={prevStep}
