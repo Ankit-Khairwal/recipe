@@ -47,10 +47,7 @@ const AddRecipe = () => {
         ingredients: filteredIngredients
       };
       
-      // In a real app, this would be posting to your backend
-      // await axios.post('http://localhost:5000/api/recipes', recipeData);
       
-      // For demo purposes, just log the data and navigate
       console.log('New Recipe:', recipeData);
       
       setLoading(false);

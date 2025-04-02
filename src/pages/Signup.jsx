@@ -16,13 +16,10 @@ const Signup = () => {
       setLoading(true);
       setSignupError(null);
       
-      // In a real app, you would send a request to your backend
-      // const response = await axios.post('http://localhost:5000/api/auth/register', data);
       
-      // For demo purposes, we'll simulate a successful registration
       console.log('Registration data:', data);
       
-      // Use the auth context register function
+      
       registerUser({ email: data.email, name: data.name });
       
       setLoading(false);

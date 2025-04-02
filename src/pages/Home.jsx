@@ -33,11 +33,7 @@ const Home = () => {
     const fetchRecipes = async () => {
       try {
         setLoading(true);
-        // In a real app, this would be fetching from your backend
-        // const response = await axios.get('http://localhost:5000/api/recipes');
-        // setRecipes(response.data);
-        
-        // For demo purposes, using placeholder data
+       
         const demoRecipes = [
           {
             _id: '1',

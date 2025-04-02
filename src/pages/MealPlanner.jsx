@@ -16,9 +16,9 @@ const MealPlanner = () => {
   const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const mealTypes = ['breakfast', 'lunch', 'dinner', 'snack'];
 
-  // Get recipes from localStorage (in a real app, this would be from your API)
+
   useEffect(() => {
-    // Demo recipes
+ 
     const demoRecipes = [
       {
         _id: '1',
@@ -67,7 +67,7 @@ const MealPlanner = () => {
     setRecipes(demoRecipes);
   }, []);
 
-  // Load saved meal plan from localStorage
+  
   useEffect(() => {
     if (isAuthenticated) {
       const savedMealPlan = JSON.parse(localStorage.getItem('mealPlan') || '{}');
@@ -75,37 +75,37 @@ const MealPlanner = () => {
     }
   }, [isAuthenticated]);
 
-  // Helper to get start of week (Sunday)
+  
   function getStartOfWeek(date) {
     const newDate = new Date(date);
-    const day = newDate.getDay(); // 0 for Sunday
-    newDate.setDate(newDate.getDate() - day); // Go to Sunday
-    newDate.setHours(0, 0, 0, 0); // Set to beginning of day
+    const day = newDate.getDay(); 
+    newDate.setDate(newDate.getDate() - day); 
+    newDate.setHours(0, 0, 0, 0);
     return newDate;
   }
 
-  // Format date as MM/DD
+ 
   const formatDate = (date) => {
     const month = date.getMonth() + 1;
     const day = date.getDate();
     return `${month}/${day}`;
   };
 
-  // Navigate to previous week
+
   const goToPrevWeek = () => {
     const prevWeek = new Date(currentWeek);
     prevWeek.setDate(prevWeek.getDate() - 7);
     setCurrentWeek(prevWeek);
   };
 
-  // Navigate to next week
+
   const goToNextWeek = () => {
     const nextWeek = new Date(currentWeek);
     nextWeek.setDate(nextWeek.getDate() + 7);
     setCurrentWeek(nextWeek);
   };
 
-  // Open recipe picker for a specific day and meal type
+
   const openRecipePicker = (dayIndex, mealType) => {
     if (!isAuthenticated) {
       alert('Please log in to plan meals');
@@ -118,7 +118,7 @@ const MealPlanner = () => {
     setSearchTerm('');
   };
 
-  // Add recipe to meal plan
+
   const addToMealPlan = (recipe) => {
     const dayDate = new Date(currentWeek);
     dayDate.setDate(dayDate.getDate() + selectedDay);
@@ -134,7 +134,7 @@ const MealPlanner = () => {
       updatedMealPlan[dateKey][selectedMealType] = [];
     }
     
-    // Check if recipe already exists to prevent duplicates
+   
     if (!updatedMealPlan[dateKey][selectedMealType].some(item => item._id === recipe._id)) {
       updatedMealPlan[dateKey][selectedMealType].push(recipe);
     }
@@ -144,7 +144,7 @@ const MealPlanner = () => {
     setShowRecipePicker(false);
   };
 
-  // Remove recipe from meal plan
+ 
   const removeFromMealPlan = (dayIndex, mealType, recipeId) => {
     const dayDate = new Date(currentWeek);
     dayDate.setDate(dayDate.getDate() + dayIndex);
@@ -157,12 +157,12 @@ const MealPlanner = () => {
         recipe => recipe._id !== recipeId
       );
       
-      // Clean up empty arrays
+
       if (updatedMealPlan[dateKey][mealType].length === 0) {
         delete updatedMealPlan[dateKey][mealType];
       }
       
-      // Clean up empty objects
+      
       if (Object.keys(updatedMealPlan[dateKey]).length === 0) {
         delete updatedMealPlan[dateKey];
       }
@@ -172,25 +172,22 @@ const MealPlanner = () => {
     localStorage.setItem('mealPlan', JSON.stringify(updatedMealPlan));
   };
 
-  // Filter recipes based on search term
+ 
   const filteredRecipes = recipes.filter(recipe => 
     recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Save meal plan (in a real app, this would send to your backend)
   const saveMealPlan = () => {
     localStorage.setItem('mealPlan', JSON.stringify(mealPlan));
     alert('Meal plan saved successfully!');
   };
 
-  // Generate shopping list from meal plan
+
   const generateShoppingList = () => {
     alert('Shopping list generator would be implemented here!');
-    // In a real app, this would analyze all recipes in the meal plan
-    // and generate a consolidated list of ingredients
+
   };
 
-  // Get recipes for a specific day and meal type
   const getRecipesForMeal = (dayIndex, mealType) => {
     const dayDate = new Date(currentWeek);
     dayDate.setDate(dayDate.getDate() + dayIndex);

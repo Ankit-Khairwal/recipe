@@ -7,10 +7,9 @@ const BookmarkButton = ({ recipeId, recipeTitle }) => {
   const { isAuthenticated, user } = useAuth();
 
   useEffect(() => {
-    // In a real app, we would check if this recipe is bookmarked
-    // by retrieving user's bookmarks from backend/localStorage
+    
     if (isAuthenticated) {
-      // Simulate checking saved bookmarks from localStorage
+     
       const savedBookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
       setIsBookmarked(savedBookmarks.some(bookmark => bookmark.id === recipeId));
     }
@@ -22,15 +21,15 @@ const BookmarkButton = ({ recipeId, recipeTitle }) => {
       return;
     }
 
-    // Toggle bookmark state
+  
     const newBookmarkedState = !isBookmarked;
     setIsBookmarked(newBookmarkedState);
     
-    // Update localStorage (in a real app, this would sync with backend)
+    
     const savedBookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
     
     if (newBookmarkedState) {
-      // Add bookmark
+     
       const updatedBookmarks = [...savedBookmarks, { 
         id: recipeId, 
         title: recipeTitle,
@@ -38,21 +37,20 @@ const BookmarkButton = ({ recipeId, recipeTitle }) => {
       }];
       localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks));
       
-      // Show a toast or notification
+     
       showToast(`${recipeTitle} added to your bookmarks!`);
     } else {
-      // Remove bookmark
+     
       const filteredBookmarks = savedBookmarks.filter(bookmark => bookmark.id !== recipeId);
       localStorage.setItem('bookmarks', JSON.stringify(filteredBookmarks));
       
-      // Show a toast or notification
+     
       showToast(`${recipeTitle} removed from your bookmarks.`);
     }
   };
 
-  // Simple toast notification function
   const showToast = (message) => {
-    // Check if toast container exists, if not create it
+   
     let toastContainer = document.getElementById('toast-container');
     
     if (!toastContainer) {
@@ -62,15 +60,15 @@ const BookmarkButton = ({ recipeId, recipeTitle }) => {
       document.body.appendChild(toastContainer);
     }
     
-    // Create toast element
+    
     const toast = document.createElement('div');
     toast.className = 'bg-dark text-white px-4 py-2 rounded-md shadow-lg mb-2 transform transition-transform duration-300 translate-y-0';
     toast.innerText = message;
     
-    // Add to container
+  
     toastContainer.appendChild(toast);
     
-    // Remove after 3 seconds
+   
     setTimeout(() => {
       toast.classList.add('translate-y-full', 'opacity-0');
       setTimeout(() => {

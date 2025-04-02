@@ -9,7 +9,7 @@ const Bookmarks = () => {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    // Load bookmarks from localStorage
+   
     setLoading(true);
     if (isAuthenticated) {
       const savedBookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
@@ -19,11 +19,11 @@ const Bookmarks = () => {
   }, [isAuthenticated]);
 
   const removeBookmark = (id) => {
-    // Filter out the removed bookmark
+   
     const updatedBookmarks = bookmarks.filter(bookmark => bookmark.id !== id);
     setBookmarks(updatedBookmarks);
     
-    // Update localStorage
+  
     localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks));
   };
 

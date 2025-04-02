@@ -29,9 +29,9 @@ const DietaryFilter = ({ onFilterChange }) => {
       fat: { min: 0, max: 100 },
     },
     cookingTime: {
-      quick: false, // Under 30 mins
-      medium: false, // 30-60 mins
-      long: false, // Over 60 mins
+      quick: false, 
+      medium: false, 
+      long: false, 
     }
   });
 
@@ -123,26 +123,26 @@ const DietaryFilter = ({ onFilterChange }) => {
     });
   };
 
-  // Count active filters
+  
   const getActiveFilterCount = () => {
     let count = 0;
     
-    // Count diet filters
+    
     Object.values(filters.diets).forEach(value => {
       if (value) count++;
     });
     
-    // Count allergen filters
+    
     Object.values(filters.allergens).forEach(value => {
       if (value) count++;
     });
     
-    // Count time filters
+    
     Object.values(filters.cookingTime).forEach(value => {
       if (value) count++;
     });
     
-    // Count nutrition filters that aren't at default values
+  
     if (filters.nutritionRange.calories.min > 0) count++;
     if (filters.nutritionRange.calories.max < 2000) count++;
     if (filters.nutritionRange.protein.min > 0) count++;
@@ -211,7 +211,7 @@ const DietaryFilter = ({ onFilterChange }) => {
               </div>
             </div>
 
-            {/* Allergens */}
+           
             <div className="p-4 border-b">
               <h4 className="font-medium mb-2">Exclude Allergens</h4>
               <div className="grid grid-cols-2 gap-2">
@@ -237,7 +237,7 @@ const DietaryFilter = ({ onFilterChange }) => {
               </div>
             </div>
 
-            {/* Cooking Time */}
+            
             <div className="p-4 border-b">
               <h4 className="font-medium mb-2">Cooking Time</h4>
               <div className="flex gap-2">
@@ -286,7 +286,7 @@ const DietaryFilter = ({ onFilterChange }) => {
               </div>
             </div>
 
-            {/* Nutrition Ranges */}
+           
             <div className="p-4">
               <h4 className="font-medium mb-2">Nutrition Ranges</h4>
               
