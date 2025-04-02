@@ -222,54 +222,55 @@ const MealPlanner = () => {
   }
 
   return (
-    <div>
-      <div className="mb-6 flex justify-between items-center">
+    <div className="container mx-auto px-4 py-6">
+      <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <Link to="/" className="flex items-center gap-2 text-primary hover:underline">
           <FaArrowLeft />
           <span>Back to recipes</span>
         </Link>
         
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button 
             onClick={saveMealPlan}
-            className="flex items-center gap-1 px-3 py-1.5 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+            className="flex items-center gap-1 px-3 py-1.5 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors text-sm"
           >
             <FaSave />
             <span>Save Plan</span>
           </button>
           <button 
             onClick={generateShoppingList}
-            className="flex items-center gap-1 px-3 py-1.5 bg-secondary text-white rounded-md hover:bg-secondary/90 transition-colors"
+            className="flex items-center gap-1 px-3 py-1.5 bg-secondary text-white rounded-md hover:bg-secondary/90 transition-colors text-sm"
           >
             <FaCalendarAlt />
-            <span>Generate Shopping List</span>
+            <span>Shopping List</span>
           </button>
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6">Weekly Meal Planner</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6">Weekly Meal Planner</h1>
       
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-3">
         <button 
           onClick={goToPrevWeek}
-          className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+          className="w-full sm:w-auto px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 transition-colors"
         >
           Previous Week
         </button>
         
-        <h2 className="text-xl font-semibold">
+        <h2 className="text-lg sm:text-xl font-semibold">
           Week of {formatDate(currentWeek)}
         </h2>
         
         <button 
           onClick={goToNextWeek}
-          className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+          className="w-full sm:w-auto px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 transition-colors"
         >
           Next Week
         </button>
       </div>
       
-      <div className="overflow-x-auto">
+      {/* Desktop view: Table layout */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
             <tr>
@@ -303,7 +304,7 @@ const MealPlanner = () => {
                         >
                           <Link 
                             to={`/recipe/${recipe._id}`}
-                            className="text-primary hover:underline"
+                            className="text-primary hover:underline text-sm"
                           >
                             {recipe.title}
                           </Link>
@@ -331,13 +332,75 @@ const MealPlanner = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Mobile view: Accordion-style layout */}
+      <div className="md:hidden">
+        {dayNames.map((day, dayIndex) => {
+          const date = new Date(currentWeek);
+          date.setDate(date.getDate() + dayIndex);
+          
+          return (
+            <div key={dayIndex} className="mb-6 border rounded-lg overflow-hidden">
+              <div className="bg-gray-100 p-3 font-semibold flex justify-between items-center">
+                <div>
+                  <div>{day}</div>
+                  <div className="text-sm text-gray-500">{formatDate(date)}</div>
+                </div>
+              </div>
+              
+              <div className="divide-y">
+                {mealTypes.map((mealType) => (
+                  <div key={mealType} className="p-3">
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="font-medium capitalize">{mealType}</h3>
+                      <button
+                        onClick={() => openRecipePicker(dayIndex, mealType)}
+                        className="flex items-center justify-center gap-1 px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded transition-colors"
+                      >
+                        <FaPlus size={8} />
+                        <span>Add</span>
+                      </button>
+                    </div>
+                    
+                    <div>
+                      {getRecipesForMeal(dayIndex, mealType).length > 0 ? (
+                        getRecipesForMeal(dayIndex, mealType).map((recipe) => (
+                          <div 
+                            key={recipe._id} 
+                            className="mb-2 bg-white p-2 rounded-md shadow-sm border flex justify-between items-center"
+                          >
+                            <Link 
+                              to={`/recipe/${recipe._id}`}
+                              className="text-primary hover:underline text-sm"
+                            >
+                              {recipe.title}
+                            </Link>
+                            <button
+                              onClick={() => removeFromMealPlan(dayIndex, mealType, recipe._id)}
+                              className="text-red-500 hover:text-red-700"
+                            >
+                              <FaTrash size={12} />
+                            </button>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-sm text-gray-500 italic">No meals planned</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
       
       {/* Recipe picker modal */}
       {showRecipePicker && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-[80vh] flex flex-col">
-            <div className="p-4 border-b">
-              <h2 className="text-xl font-semibold">Select a Recipe</h2>
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-lg max-h-[90vh] md:max-h-[80vh] flex flex-col">
+            <div className="p-3 md:p-4 border-b">
+              <h2 className="text-lg md:text-xl font-semibold">Select a Recipe</h2>
               <input
                 type="text"
                 placeholder="Search recipes..."
@@ -347,16 +410,16 @@ const MealPlanner = () => {
               />
             </div>
             
-            <div className="overflow-y-auto flex-1 p-4">
+            <div className="overflow-y-auto flex-1 p-3 md:p-4">
               {filteredRecipes.length > 0 ? (
-                <div className="grid gap-3">
+                <div className="grid gap-2 md:gap-3">
                   {filteredRecipes.map(recipe => (
                     <div 
                       key={recipe._id}
-                      className="flex items-center gap-3 p-3 border rounded-md hover:bg-gray-50 cursor-pointer"
+                      className="flex items-center gap-2 md:gap-3 p-2 md:p-3 border rounded-md hover:bg-gray-50 cursor-pointer"
                       onClick={() => addToMealPlan(recipe)}
                     >
-                      <div className="w-16 h-16 flex-shrink-0 bg-gray-200 rounded overflow-hidden">
+                      <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 bg-gray-200 rounded overflow-hidden">
                         <img 
                           src={recipe.imageUrl} 
                           alt={recipe.title}
@@ -364,8 +427,8 @@ const MealPlanner = () => {
                         />
                       </div>
                       <div>
-                        <h3 className="font-medium">{recipe.title}</h3>
-                        <p className="text-sm text-gray-500">
+                        <h3 className="font-medium text-sm md:text-base">{recipe.title}</h3>
+                        <p className="text-xs md:text-sm text-gray-500">
                           {recipe.cookingTime} mins • {recipe.category}
                         </p>
                       </div>
@@ -377,10 +440,10 @@ const MealPlanner = () => {
               )}
             </div>
             
-            <div className="p-4 border-t flex justify-end gap-2">
+            <div className="p-3 md:p-4 border-t flex justify-end gap-2">
               <button
                 onClick={() => setShowRecipePicker(false)}
-                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors"
+                className="px-3 py-1.5 md:px-4 md:py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors text-sm md:text-base"
               >
                 Cancel
               </button>
